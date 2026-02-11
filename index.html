@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>A Special Hug For You 🫂</title>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600&family=Quicksand:wght@500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+<style>
+  :root {
+    --primary: #a29bfe;
+    --primary-dark: #6c5ce7; 
+    --accent: #fd79a8;
+    --bg-gradient: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+    --white: #ffffff;
+    --shadow: 0 20px 50px rgba(108, 92, 231, 0.3);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  body {
+    height: 100dvh;
+    background: var(--bg-gradient);
+    background-size: 400% 400%;
+    animation: gradientBG 10s ease infinite;
+    font-family: 'Quicksand', sans-serif;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    perspective: 1000px;
+  }
+
+  @keyframes gradientBG {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+  }
+
+  /* --- Background Particles --- */
+  .bg-elements { position: absolute; inset: 0; pointer-events: none; z-index: 0; }
+  .particle {
+    position: absolute;
+    bottom: -10vh;
+    animation: floatUp linear infinite;
+    font-size: 1.5rem;
+    opacity: 0.6;
+    filter: blur(0.5px);
+  }
+  @keyframes floatUp {
+    0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+    20% { opacity: 0.8; }
+    100% { transform: translateY(-120vh) rotate(360deg) scale(1.2); opacity: 0; }
+  }
+
+  /* --- 3D Glass Card --- */
+  .card-container {
+    transform-style: preserve-3d;
+    transition: transform 0.1s;
+    width: 90%;
+    max-width: 420px;
+    z-index: 10;
+    margin-bottom: 30px;
+  }
+
+  .card {
+    background: rgba(255, 255, 255, 0.9);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border-radius: 35px;
+    padding: 25px;
+    text-align: center;
+    box-shadow: var(--shadow);
+    border: 2px solid rgba(255,255,255,0.8);
+    position: relative;
+    overflow: hidden;
+    transform: translateZ(20px);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  /* --- Top Quote Banner --- */
+  .quote-banner {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255,255,255,0.8);
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--primary-dark);
+    font-style: italic;
+    font-weight: 600;
+    margin-bottom: 15px;
+    width: 100%;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s ease;
+  }
+
+  /* Decorative Wave */
+  .wave {
+    position: absolute;
+    bottom: -10px;
+    left: 0;
+    width: 200%;
+    height: 60px;
+    background: url('data:image/svg+xml;utf8,<svg viewBox="0 0 1200 120" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none"><path d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z" fill="%23fbc2eb" fill-opacity="0.3"/></svg>');
+    background-size: 50% 100%;
+    animation: waveMove 6s linear infinite;
+    pointer-events: none;
+    z-index: 0;
+  }
+  @keyframes waveMove { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+  h1 { 
+    font-family: 'Fredoka', sans-serif; 
+    color: var(--primary-dark); 
+    font-size: clamp(1.5rem, 5vw, 1.8rem); 
+    margin: 15px 0 8px; 
+    min-height: 2.2rem;
+    z-index: 2;
+    position: relative;
+  }
+  
+  p { 
+    color: #636e72; 
+    font-size: clamp(0.9rem, 4vw, 1.1rem); 
+    margin-bottom: 20px; 
+    font-weight: 500; 
+    z-index: 2;
+    position: relative;
+  }
+
+  /* --- GIF Frame --- */
+  .gif-frame {
+    width: 100%;
+    aspect-ratio: 4/3; 
+    border-radius: 25px;
+    overflow: hidden;
+    border: 4px solid #fff;
+    background: #fff;
+    margin-bottom: 10px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    position: relative;
+    transform: translateZ(10px);
+    z-index: 2;
+  }
+  .gif-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.3s; }
+  .card:hover .gif-img { transform: scale(1.05); }
+
+  /* --- Interactive Buttons --- */
+  .btn-group { display: flex; gap: 15px; justify-content: center; width: 100%; position: relative; z-index: 5;}
+  
+  .btn {
+    padding: 14px 20px;
+    border: none;
+    border-radius: 50px;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: 'Fredoka', sans-serif;
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    white-space: nowrap;
+    position: relative;
+  }
+  
+  .btn-yes { 
+    background: var(--primary); 
+    color: white; 
+    box-shadow: 0 5px 15px rgba(108, 92, 231, 0.3);
+    flex: 1; 
+  }
+  .btn-yes:hover { transform: scale(1.05) translateY(-2px); box-shadow: 0 8px 20px rgba(108, 92, 231, 0.4); }
+  
+  .btn-no { 
+    background: #dfe6e9; 
+    color: #636e72; 
+    flex: 1;
+  }
+
+  /* --- Screens --- */
+  .screen { display: none; opacity: 0; transform: scale(0.9); transition: opacity 0.4s ease, transform 0.4s ease; width: 100%; }
+  .screen.active { display: block; opacity: 1; transform: scale(1); }
+
+  /* --- Hug Meter --- */
+  .meter-box {
+    background: #f1f2f6;
+    height: 30px;
+    border-radius: 50px;
+    padding: 4px;
+    margin: 20px 0;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+    position: relative;
+    z-index: 2;
+  }
+  .meter-fill {
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #fd79a8, #a29bfe);
+    border-radius: 50px;
+    transition: width 0.1s linear;
+    position: relative;
+    overflow: hidden;
+  }
+  .meter-fill::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.5), transparent);
+    transform: translateX(-100%);
+    animation: shimmer 1.5s infinite;
+  }
+  @keyframes shimmer { 100% { transform: translateX(100%); } }
+
+  /* --- Music Toggle --- */
+  .music-btn {
+    position: absolute;
+    top: 20px; right: 20px;
+    width: 45px; height: 45px;
+    background: rgba(255,255,255,0.9);
+    border-radius: 50%;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    z-index: 100;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+
+  #confetti { position: fixed; inset: 0; pointer-events: none; z-index: 50; }
+  
+  /* --- Emoji Trail --- */
+  .emoji-trail {
+    position: absolute;
+    font-size: 1.5rem;
+    pointer-events: none;
+    animation: fadeEmoji 1s linear forwards;
+    z-index: 999;
+  }
+  @keyframes fadeEmoji { 
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(20px) scale(0.5); opacity: 0; }
+  }
+
+  /* --- Bottom Credits --- */
+  .credits {
+    position: fixed;
+    bottom: 10px;
+    font-size: 0.8rem;
+    color: rgba(255,255,255,0.8);
+    text-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 100;
+    text-align: center;
+  }
+  .credits span { color: #fff; font-weight: bold; }
+  .social-icons a { color: #fff; margin: 0 5px; text-decoration: none; font-size: 1rem; transition: 0.3s; }
+  .social-icons a:hover { color: var(--primary-dark); }
+
+  /* --- Mobile Optimization --- */
+  @media (max-height: 700px) {
+    .card { padding: 15px; border-radius: 25px; }
+    h1 { margin: 8px 0; font-size: 1.3rem; }
+    p { margin-bottom: 10px; font-size: 0.9rem; }
+    .gif-frame { margin-bottom: 8px; }
+    .quote-banner { font-size: 0.75rem; padding: 5px 10px; margin-bottom: 10px; min-height: 40px; }
+  }
+
+</style>
+</head>
+<body>
+
+<button class="music-btn" onclick="toggleMusic()" id="musicToggle">🔇</button>
+<audio id="bgMusic" loop>
+  <source src="" type="audio/mpeg"> </audio>
+
+<div class="bg-elements" id="bgElements"></div>
+<canvas id="confetti"></canvas>
+
+<div class="card-container" id="tiltCard">
+  <div class="card">
+    
+    <div class="quote-banner" id="quoteText">"A hug is a handshake from the heart."</div>
+
+    <div class="wave"></div>
+
+    <div class="screen active" id="askScreen">
+      <div class="gif-frame">
+        <img src="https://usagif.com/wp-content/uploads/2022/hqgif/cat-hug-48-cute-drawing-cat-hugs.gif" class="gif-img" alt="Ask Hug">
+      </div>
+      <h1 class="type-text" data-text="Can I have a hug? 🥺"></h1>
+      <p>It's Hug Day and I'm lonely...</p>
+      <div class="btn-group" id="btnArea">
+        <button class="btn btn-yes" onclick="startJourney()">Yes! 🥰</button>
+        <button class="btn btn-no" id="noBtn" onclick="rejectHug()">No 😤</button>
+      </div>
+    </div>
+
+    <div class="screen" id="cryScreen">
+      <div class="gif-frame">
+        <img src="https://media.tenor.com/yVORhJ_dYNQAAAAj/bubu-dudu-sseeyall.gif" class="gif-img" alt="Crying">
+      </div>
+      <h1>But... why? 😭</h1>
+      <p>I promise I'll be squishy...</p>
+      <div class="btn-group">
+        <button class="btn btn-yes" onclick="startJourney()">Okay Yes! 🥺</button>
+        <button class="btn btn-no" onclick="pleadingMode()">Still No...</button>
+      </div>
+    </div>
+
+    <div class="screen" id="pleaseScreen">
+      <div class="gif-frame">
+        <img src="https://media.tenor.com/0WoQ5QQ9VPMAAAAM/crying-bear.gif" class="gif-img" alt="Please">
+      </div>
+      <h1>Pretty please? 🥺❤️</h1>
+      <p>Look at those eyes...</p>
+      <button class="btn btn-yes" style="width:100%;" onclick="startJourney()">Okay, Fine! 🤗</button>
+    </div>
+
+    <div class="screen" id="loaderScreen">
+      <div class="gif-frame" style="border-color:var(--primary);">
+        <img src="https://c.tenor.com/0cjaQYRJC3oAAAAC/hugs-bear-hug.gif" class="gif-img" alt="Loading">
+      </div>
+      <h1>Preparing Warmth...</h1>
+      <p>Calibrating hug levels... 🔄</p>
+    </div>
+
+    <div class="screen" id="meterScreen">
+      <div class="gif-frame">
+        <img src="https://c.tenor.com/F2SQcVd5fMIAAAAC/tenor.gif" class="gif-img" alt="Cute Wait">
+      </div>
+      <h2 style="color:var(--primary); font-family:'Fredoka';">Hug Meter 💖</h2>
+      <div class="meter-box">
+        <div class="meter-fill" id="fillBar"></div>
+      </div>
+      <p id="statusTxt">Press & Hold to send warmth!</p>
+      <button class="btn btn-yes" id="holdBtn" style="width:100%;">HOLD BUTTON</button>
+    </div>
+
+    <div class="screen" id="finalScreen">
+      <div class="gif-frame" style="border-color:var(--accent);">
+        <img src="https://www.gifcen.com/wp-content/uploads/2023/07/hug-gif-5.gif" class="gif-img" alt="Tight Hug">
+      </div>
+      <h1>Officially Hugged! 🫂</h1>
+      <p style="font-style:italic; font-size:0.95rem;">
+        "Sometimes a hug is all you need to make you feel better."
+      </p>
+      <p style="margin-top:10px; color:var(--accent); font-weight:bold;">Happy Hug Day! ✨</p>
+    </div>
+
+  </div>
+</div>
+
+<div class="credits">
+  Made with <span>❤️</span> by You
+  <div class="social-icons">
+    <a href="https://www.instagram.com/ravikant.mahii/"><i class="fab fa-instagram"></i></a>
+    <a href="https://github.com/Ravikantmahi"><i class="fab fa-github"></i></a>
+  </div>
+</div>
+
+<script>
+  /* --- 1. Quotes Rotation System (TOP OF CARD) --- */
+  const quotes = [
+    "“A hug is worth a thousand words.” 🤍",
+    "“Hugs were invented to let people know you love them without saying anything.” 🫂",
+    "“One day, someone will hug you so tight that all of your broken pieces will stick back together.” ✨",
+    "“I have a present for you, but I need to borrow your arms to wrap it.” 🎁",
+    "“Sending you a ghost hug. You can't feel it, but it's there.” 👻",
+    "“A hug is the perfect gift; one size fits all, and nobody minds if you exchange it back.” 💖",
+    "“There is nothing like a mama hug.” 🌸",
+    "“Hugs are the universal medicine.” 💊"
+  ];
+
+  const quoteEl = document.getElementById('quoteText');
+  let quoteIndex = 0;
+
+  setInterval(() => {
+    quoteEl.style.opacity = 0; // Fade out
+    setTimeout(() => {
+      quoteIndex = (quoteIndex + 1) % quotes.length;
+      quoteEl.innerText = quotes[quoteIndex];
+      quoteEl.style.opacity = 1; // Fade in
+    }, 500);
+  }, 4000); 
+
+  /* --- 2. Typewriter Effect --- */
+  function typeWriter(element, text, speed = 50) {
+    let i = 0;
+    element.innerHTML = "";
+    function type() {
+      if (i < text.length) {
+        element.innerHTML += text.charAt(i);
+        i++;
+        setTimeout(type, speed);
+      }
+    }
+    type();
+  }
+  window.onload = () => {
+    const h1 = document.querySelector('.type-text');
+    if(h1) typeWriter(h1, h1.getAttribute('data-text'));
+  };
+
+  /* --- 3. Emoji Cursor Trail --- */
+  const emojis = ['❤️', '✨', '💖', '🌸', '🧸'];
+  document.addEventListener('mousemove', (e) => {
+    if(Math.random() > 0.1) return; 
+    const trail = document.createElement('div');
+    trail.className = 'emoji-trail';
+    trail.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    trail.style.left = e.pageX + 'px';
+    trail.style.top = e.pageY + 'px';
+    document.body.appendChild(trail);
+    setTimeout(() => trail.remove(), 1000);
+  });
+
+  /* --- 4. Runaway "No" Button --- */
+  const noBtn = document.getElementById('noBtn');
+  
+  if (matchMedia('(pointer:fine)').matches) {
+    noBtn.addEventListener('mouseover', () => {
+      const maxX = 120; 
+      const maxY = 80;
+      const randomX = Math.random() * maxX - (maxX/2);
+      const randomY = Math.random() * maxY - (maxY/2);
+      noBtn.style.transform = `translate(${randomX}px, ${randomY}px)`;
+    });
+  }
+
+  /* --- 5. 3D Tilt Effect --- */
+  const card = document.getElementById('tiltCard');
+  document.addEventListener('mousemove', (e) => {
+    const xAxis = (window.innerWidth / 2 - e.pageX) / 30;
+    const yAxis = (window.innerHeight / 2 - e.pageY) / 30;
+    card.style.transform = `rotateY(${xAxis}deg) rotateX(${yAxis}deg)`;
+  });
+
+  /* --- 6. Navigation & Audio Logic (UPDATED) --- */
+  const audio = document.getElementById('bgMusic');
+  const musicBtn = document.getElementById('musicToggle');
+  
+  // Helper to change song and play
+  function playSong(songFile) {
+    // Only change source if it's different to avoid reloading
+    if (!audio.src.includes(songFile)) {
+        audio.src = songFile;
+    }
+    audio.play().catch(e => console.log("Interaction needed first"));
+    musicBtn.innerText = "🔊";
+  }
+
+  function toggleMusic() {
+    if(audio.paused) {
+      audio.play().catch(e => console.log("Interaction needed"));
+      musicBtn.innerText = "🔊";
+    } else {
+      audio.pause();
+      musicBtn.innerText = "🔇";
+    }
+  }
+
+  function showScreen(id) {
+    const active = document.querySelector('.screen.active');
+    active.classList.remove('active');
+    setTimeout(() => {
+      document.getElementById(id).classList.add('active');
+    }, 200);
+  }
+
+  // LOGIC: Click NO -> Play song1.mp3 (Sad)
+  function rejectHug() { 
+    playSong('song1.mp3'); 
+    showScreen('cryScreen'); 
+  }
+
+  function pleadingMode() { 
+    showScreen('pleaseScreen'); 
+  }
+  
+  // LOGIC: Click YES -> Play song2.mp3 (Happy)
+  function startJourney() {
+    playSong('song2.mp3'); 
+    showScreen('loaderScreen');
+    setTimeout(() => showScreen('meterScreen'), 3500); 
+  }
+
+  /* --- 7. Hug Meter Logic --- */
+  const btn = document.getElementById('holdBtn');
+  const bar = document.getElementById('fillBar');
+  const txt = document.getElementById('statusTxt');
+  let progress = 0;
+  let interval;
+
+  const startAction = (e) => {
+    if(e.type === 'touchstart') e.preventDefault(); 
+    btn.style.transform = "scale(0.95)";
+    interval = setInterval(() => {
+      if(progress < 100) {
+        progress += 2; 
+        bar.style.width = progress + "%";
+        if(progress > 20) txt.innerText = "Squeezing... 🐻";
+        if(progress > 50) txt.innerText = "Tighter... ❤️";
+        if(progress > 80) txt.innerText = "Almost there... ✨";
+      } else {
+        clearInterval(interval);
+        finishHug();
+      }
+    }, 30);
+  };
+
+  const stopAction = () => {
+    clearInterval(interval);
+    btn.style.transform = "scale(1)";
+    if(progress < 100 && progress > 0) txt.innerText = "Don't let go! 🥺";
+  };
+
+  btn.addEventListener('mousedown', startAction);
+  btn.addEventListener('touchstart', startAction, {passive: false});
+  btn.addEventListener('mouseup', stopAction);
+  btn.addEventListener('mouseleave', stopAction);
+  btn.addEventListener('touchend', stopAction);
+
+  function finishHug() {
+    showScreen('finalScreen');
+    triggerConfetti();
+    if(navigator.vibrate) navigator.vibrate([100, 50, 200]);
+  }
+
+  /* --- 8. Confetti & Background --- */
+  function createParticles() {
+    const bg = document.getElementById('bgElements');
+    const icons = ['💜', '🌸', '✨', '🧸', '☁️'];
+    setInterval(() => {
+      const el = document.createElement('div');
+      el.classList.add('particle');
+      el.innerText = icons[Math.floor(Math.random() * icons.length)];
+      el.style.left = Math.random() * 100 + "%";
+      el.style.animationDuration = (Math.random() * 5 + 10) + "s";
+      bg.appendChild(el);
+      setTimeout(() => el.remove(), 15000);
+    }, 800);
+  }
+  createParticles();
+
+  function triggerConfetti() {
+    const canvas = document.getElementById('confetti');
+    const ctx = canvas.getContext('2d');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const pieces = Array.from({length: 150}).map(() => ({
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height - canvas.height,
+      color: `hsl(${Math.random()*360}, 100%, 75%)`,
+      size: Math.random() * 8 + 4,
+      speed: Math.random() * 5 + 3,
+      swing: Math.random() * 2
+    }));
+
+    function draw() {
+      ctx.clearRect(0,0,canvas.width,canvas.height);
+      let active = false;
+      pieces.forEach(p => {
+        p.y += p.speed;
+        p.x += Math.sin(p.y * 0.05) * p.swing; 
+        ctx.fillStyle = p.color;
+        ctx.beginPath();
+        ctx.arc(p.x, p.y, p.size, 0, Math.PI*2);
+        ctx.fill();
+        if(p.y < canvas.height) active = true;
+      });
+      if(active) requestAnimationFrame(draw);
+    }
+    draw();
+  }
+</script>
+</body>
+</html>
