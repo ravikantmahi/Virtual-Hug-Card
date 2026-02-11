@@ -4,8 +4,7 @@ A sweet, interactive web experience designed for **Hug Day** (or any day you wan
 
 This project features a playful interface where the user is asked for a hug. If they try to say "No", the button runs away (on desktop) or plays sad music (on mobile). When they say "Yes", happy music plays and they get to interact with a "Hug Meter" to send warmth!
 
-![Project Preview](https://via.placeholder.com/800x400?text=Preview+Image+Here)
-*(Replace this link with a screenshot of your site)*
+![Project Preview](https://raw.githubusercontent.com/ravikantmahi/Virtual-Hug-Card/refs/heads/main/Screenshot%202026-02-11%20223503.png)
 
 ## ✨ Features
 
